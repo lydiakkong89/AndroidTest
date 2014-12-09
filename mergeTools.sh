@@ -24,4 +24,11 @@ git pull --rebase origin $merBranch
 
 git checkout $branch
 echo "the current branch is "`git branch | grep \* | cut -d " " -f 2`
-git merge $merBranch
+log=`git merge $merBranch`
+
+if [ $((echo $log | grep conflict)) != "" ];then
+echo 'conflit occurred'
+git merge --abort
+exit
+fi
+echo "merge successfully"
